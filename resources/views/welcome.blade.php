@@ -3,202 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Portfolyo | Geleceğin Tasarımı</title>
+    <title>Berkay Yüksel | Full Stack Developer</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --primary-color: #00f2ea;
-            --secondary-color: #ff00ff;
-            --accent-color: #7c3aed;
-            --bg-dark: #0a0a0f;
-            --text-light: #e0e0e0;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.2);
+            --text-primary: #1a1a1a;
+            --text-secondary: rgba(0, 0, 0, 0.7);
+            --accent: #000000;
+        }
+
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, rgba(245, 245, 245, 0.9) 0%, rgba(232, 232, 232, 0.9) 25%, rgba(211, 211, 211, 0.9) 50%, rgba(192, 192, 192, 0.9) 75%, rgba(168, 168, 168, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');
+            background-size: 400% 400%, cover;
+            background-position: 0% 50%, center;
+            background-attachment: fixed, fixed;
+            background-blend-mode: overlay, normal;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
             overflow-x: hidden;
-        }
-
-        /* 3D Canvas */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        /* Content Overlay */
-        .content-wrapper {
             position: relative;
-            z-index: 1;
         }
 
-        /* Navbar */
-        .navbar {
-            background: rgba(10, 10, 15, 0.7) !important;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%, center; }
+            50% { background-position: 100% 50%, center; }
+            100% { background-position: 0% 50%, center; }
+        }
+
+        /* MacBook Window Container */
+        .macbook-window {
+            max-width: 1200px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* MacBook Window Controls */
+        .window-controls {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 242, 234, 0.2);
-            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            gap: 10px;
         }
 
-        .navbar.scrolled {
-            background: rgba(10, 10, 15, 0.95) !important;
-            box-shadow: 0 5px 30px rgba(0, 242, 234, 0.1);
+        .window-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .navbar-brand {
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: #fff !important;
-            text-shadow: 0 0 20px rgba(0, 242, 234, 0.5);
+        .window-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
         }
 
-        .nav-link {
-            color: #fff !important;
-            margin: 0 15px;
-            position: relative;
-            transition: all 0.3s ease;
+        .window-btn.close {
+            background: #ff5f57;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transition: width 0.3s ease;
+        .window-btn.minimize {
+            background: #ffbd2e;
         }
 
-        .nav-link:hover::after {
-            width: 100%;
+        .window-btn.maximize {
+            background: #28ca42;
+        }
+
+        /* Window Content */
+        .window-content {
+            padding: 80px 60px;
+            min-height: calc(100vh - 200px);
         }
 
         /* Hero Section */
         .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            position: relative;
-            padding: 100px 20px;
+            margin-bottom: 100px;
         }
 
-        .hero-content {
-            max-width: 900px;
+        .hero-name {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease;
         }
         
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #00f2ea 0%, #ff00ff 50%, #7c3aed 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            animation: glow 3s ease-in-out infinite;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.2s both;
         }
 
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 242, 234, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(255, 0, 255, 0.8)); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            border: 2px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            border-radius: 50px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transition: left 0.4s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover {
-            color: #000;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 242, 234, 0.4);
-        }
-
-        .cta-button:hover::before {
-            left: 0;
-        }
-
-        /* Sections */
-        section {
-            padding: 100px 0;
-            position: relative;
+        /* Projects Section */
+        .projects-section {
+            margin-top: 80px;
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 60px;
-            position: relative;
-            display: inline-block;
-            color: #fff;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 50px;
+            text-align: center;
+            letter-spacing: -1px;
         }
 
-        .section-title::before {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 2px;
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
-        /* Glass Cards */
+        /* Liquid Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(35px) saturate(180%);
+            -webkit-backdrop-filter: blur(35px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 40px;
-            transition: all 0.4s ease;
-            height: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .glass-card::before {
@@ -208,7 +186,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 234, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.6s ease;
         }
 
@@ -217,414 +195,284 @@
         }
         
         .glass-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px rgba(0, 242, 234, 0.3);
-            border-color: var(--primary-color);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.35);
         }
 
-        /* Project Icons */
         .project-icon {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Skills Badges */
-        .skill-badge {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 5px;
-            background: rgba(0, 242, 234, 0.1);
-            border: 1px solid var(--primary-color);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-badge:hover {
-            background: var(--primary-color);
-            color: #000;
-            transform: translateY(-3px);
-        }
-
-        /* Code Block */
-        .code-block {
-            background: rgba(0, 0, 0, 0.5);
-            border-left: 3px solid var(--primary-color);
-            padding: 30px;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        /* Contact Form */
-        .contact-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 15px 20px;
+            font-size: 3rem;
             margin-bottom: 20px;
-            width: 100%;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            color: var(--text-primary);
+            opacity: 0.9;
         }
 
-        .contact-input:focus {
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(0, 242, 234, 0.3);
-        }
-
-        .contact-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
+        .project-title {
+            font-size: 1.5rem;
             font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 242, 234, 0.4);
+        .tech-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* Scroll Indicator */
-        .scroll-indicator {
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            section { padding: 60px 0; }
+            .window-content {
+                padding: 40px 30px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-name {
+                font-size: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
 
-    <div id="canvas-container"></div>
-
-    <div class="content-wrapper">
-        <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="#">PORTFOLIO</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: rgba(255,255,255,0.3);">
-                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#home">Ana Sayfa</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Hakkımda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#projects">Projeler</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
-                    </ul>
-                </div>
+    <!-- MacBook Window -->
+    <div class="macbook-window">
+        <!-- Window Controls -->
+        <div class="window-controls">
+            <button class="window-btn close" onclick="window.close()"></button>
+            <button class="window-btn minimize" onclick="minimizeWindow()"></button>
+            <button class="window-btn maximize" onclick="maximizeWindow()"></button>
             </div>
-        </nav>
 
-        <section id="home" class="hero-section">
-            <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
-                <h1 class="hero-title">DİJİTAL EVRENİ<br>YENİDEN TASARLIYORUM</h1>
-                <p class="hero-subtitle">Full Stack Developer • Creative Coder • Digital Artist</p>
-                <button class="cta-button" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
-                    Keşfet
-                </button>
+        <!-- Window Content -->
+        <div class="window-content">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1 class="hero-name">Berkay Yüksel</h1>
+                <p class="hero-title">Full Stack Developer</p>
             </div>
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down fa-2x" style="color: var(--primary-color);"></i>
-            </div>
-        </section>
 
-        <section id="about">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-right">Hakkımda</h2>
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-                        <p class="lead mb-4">Modern teknolojileri kullanarak dijital deneyimler yaratıyorum. Her proje, bir sanat eseri gibi özenle şekillendiriliyor.</p>
-                        <p class="mb-4">Kullanıcı deneyimini merkeze alan, performans odaklı ve görsel açıdan etkileyici web uygulamaları geliştiriyorum. Kod yazmak benim için sadece bir iş değil, bir tutku.</p>
-                        <div class="mt-5">
-                            <span class="skill-badge">React & Next.js</span>
-                            <span class="skill-badge">Three.js & WebGL</span>
-                            <span class="skill-badge">Node.js & Express</span>
-                            <span class="skill-badge">TypeScript</span>
-                            <span class="skill-badge">Python & AI</span>
-                            <span class="skill-badge">UI/UX Design</span>
+            <!-- Projects Section -->
+            <div class="projects-section">
+                <h2 class="section-title">Projelerim</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <div class="glass-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3 class="project-title">E-Commerce Platform</h3>
+                        <p class="project-description">
+                            Modern ve kullanıcı dostu e-ticaret platformu. Gerçek zamanlı ödeme sistemi ve admin paneli ile tam özellikli alışveriş deneyimi.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">MongoDB</span>
+                            <span class="tech-badge">Stripe</span>
                         </div>
                     </div>
-                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
-                        <div class="code-block">
-                            <span style="color: #ff79c6">class</span> <span style="color: #50fa7b">Developer</span> {<br>
-                            &nbsp;&nbsp;<span style="color: #ff79c6">constructor</span>() {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #8be9fd">this</span>.name = <span style="color: #f1fa8c">"Sizin Adınız"</span>;<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #8be9fd">this</span>.passion = <span style="color: #f1fa8c">"Innovation"</span>;<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #8be9fd">this</span>.skills = [<span style="color: #f1fa8c">"React"</span>, <span style="color: #f1fa8c">"Three.js"</span>];<br>
-                            &nbsp;&nbsp;}<br><br>
-                            &nbsp;&nbsp;<span style="color: #50fa7b">create</span>() {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff79c6">return</span> <span style="color: #f1fa8c">"Amazing Things"</span>;<br>
-                            &nbsp;&nbsp;}<br>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="projects">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-right">Projelerim</h2>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="glass-card text-center">
+                    <!-- Project 2 -->
+                    <div class="glass-card" data-aos="fade-up" data-aos-delay="200">
                             <div class="project-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <h3 class="mb-3">Quantum E-Commerce</h3>
-                            <p class="text-muted">Next.js ve AI destekli alışveriş deneyimi. Gerçek zamanlı ürün önerileri ve 3D ürün görselleştirme.</p>
-                            <button class="btn btn-outline-primary mt-3">Detaylar</button>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="project-title">Analytics Dashboard</h3>
+                        <p class="project-description">
+                            İş zekası ve veri görselleştirme platformu. Gerçek zamanlı veri analizi, interaktif grafikler ve raporlama özellikleri.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Vue.js</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">PostgreSQL</span>
+                            <span class="tech-badge">D3.js</span>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="glass-card text-center">
-                            <div class="project-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <h3 class="mb-3">Neural Dashboard</h3>
-                            <p class="text-muted">React ve Three.js ile yapılmış interaktif veri görselleştirme platformu. Real-time analytics ve tahminleme.</p>
-                            <button class="btn btn-outline-primary mt-3">Detaylar</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="500">
-                        <div class="glass-card text-center">
-                            <div class="project-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <h3 class="mb-3">Cyber Arena</h3>
-                            <p class="text-muted">WebGL tabanlı multiplayer oyun. Gerçek zamanlı fizik simülasyonu ve etkileyici shader efektleri.</p>
-                            <button class="btn btn-outline-primary mt-3">Detaylar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="contact" style="padding-bottom: 100px;">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-right">İletişime Geç</h2>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8" data-aos="fade-up">
-                        <div class="glass-card">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="contact-input" placeholder="Adınız" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="email" class="contact-input" placeholder="E-posta Adresiniz" required>
-                                    </div>
-                                </div>
-                                <input type="text" class="contact-input" placeholder="Konu" required>
-                                <textarea rows="5" class="contact-input" placeholder="Mesajınız..." required></textarea>
-                                <button type="submit" class="btn submit-btn w-100">
-                                    <i class="fas fa-paper-plane me-2"></i> Mesajı Gönder
-                                </button>
-                            </form>
+                    <!-- Project 3 -->
+                    <div class="glass-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="project-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="project-title">Social Media App</h3>
+                        <p class="project-description">
+                            Mobil öncelikli sosyal medya uygulaması. Anlık mesajlaşma, hikaye paylaşımı ve içerik keşfetme özellikleri ile modern bir deneyim.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Express</span>
+                            <span class="tech-badge">Socket.io</span>
+                            <span class="tech-badge">Redis</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
+        // Initialize AOS
         AOS.init({
-            once: false,
-            offset: 100,
-            duration: 1000,
-            easing: 'ease-out-cubic'
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+        // Window Controls Functions
+        function minimizeWindow() {
+            const window = document.querySelector('.macbook-window');
+            window.style.transform = 'scale(0.95)';
+            window.style.opacity = '0.8';
+            setTimeout(() => {
+                window.style.transform = 'scale(1)';
+                window.style.opacity = '1';
+            }, 300);
+        }
+
+        function maximizeWindow() {
+            const window = document.querySelector('.macbook-window');
+            if (window.style.width === '100%') {
+                window.style.width = '';
+                window.style.height = '';
+                window.style.maxWidth = '1200px';
+                window.style.margin = '50px auto';
             } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Three.js Setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        camera.position.z = 30;
-
-        // Earth
-        const earthGeometry = new THREE.SphereGeometry(8, 64, 64);
-        const textureLoader = new THREE.TextureLoader();
-        
-        const earthTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
-        const earthBumpMap = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg');
-        
-        const earthMaterial = new THREE.MeshPhongMaterial({
-            map: earthTexture,
-            bumpMap: earthBumpMap,
-            bumpScale: 0.3,
-            shininess: 10
-        });
-        
-        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-        scene.add(earth);
-
-        // Atmosphere Glow
-        const atmosphereGeometry = new THREE.SphereGeometry(8.3, 64, 64);
-        const atmosphereMaterial = new THREE.MeshBasicMaterial({
-            color: 0x00f2ea,
-            transparent: true,
-            opacity: 0.15,
-            side: THREE.BackSide
-        });
-        const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-        scene.add(atmosphere);
-
-        // Stars
-        const starGeometry = new THREE.BufferGeometry();
-        const starCount = 8000;
-        const starPositions = new Float32Array(starCount * 3);
-        const starColors = new Float32Array(starCount * 3);
-
-        for (let i = 0; i < starCount * 3; i += 3) {
-            starPositions[i] = (Math.random() - 0.5) * 400;
-            starPositions[i + 1] = (Math.random() - 0.5) * 400;
-            starPositions[i + 2] = (Math.random() - 0.5) * 400;
-            
-            const colorChoice = Math.random();
-            if (colorChoice > 0.9) {
-                starColors[i] = 0;
-                starColors[i + 1] = 0.96;
-                starColors[i + 2] = 0.92;
-            } else if (colorChoice > 0.8) {
-                starColors[i] = 1;
-                starColors[i + 1] = 0;
-                starColors[i + 2] = 1;
-            } else {
-                starColors[i] = 1;
-                starColors[i + 1] = 1;
-                starColors[i + 2] = 1;
+                window.style.width = '100%';
+                window.style.height = '100vh';
+                window.style.maxWidth = '100%';
+                window.style.margin = '0';
+                window.style.borderRadius = '0';
             }
         }
 
-        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-        starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+        // Create Floating Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
 
-        const starMaterial = new THREE.PointsMaterial({
-            size: 0.7,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.8
-        });
-
-        const stars = new THREE.Points(starGeometry, starMaterial);
-        scene.add(stars);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(5, 3, 5);
-        scene.add(directionalLight);
-
-        const pointLight1 = new THREE.PointLight(0x00f2ea, 1, 100);
-        pointLight1.position.set(-20, 10, -10);
-        scene.add(pointLight1);
-
-        const pointLight2 = new THREE.PointLight(0xff00ff, 1, 100);
-        pointLight2.position.set(20, -10, 10);
-        scene.add(pointLight2);
-
-        // Mouse interaction
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        // Scroll effect
-        let scrollY = 0;
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-        });
-
-        // Animation
-        function animate() {
-            requestAnimationFrame(animate);
-
-            targetX = mouseX * 0.3;
-            targetY = mouseY * 0.3;
-
-            earth.rotation.y += 0.002;
-            earth.rotation.x += (targetY - earth.rotation.x) * 0.02;
-            earth.rotation.y += (targetX - earth.rotation.y) * 0.02;
-
-            atmosphere.rotation.y += 0.001;
-            stars.rotation.y += 0.0002;
-
-            const scrollFactor = scrollY * 0.001;
-            camera.position.y = scrollFactor * 5;
-            camera.rotation.x = scrollFactor * 0.1;
-
-            pointLight1.position.x = Math.sin(Date.now() * 0.001) * 20;
-            pointLight1.position.z = Math.cos(Date.now() * 0.001) * 20;
-
-            pointLight2.position.x = Math.cos(Date.now() * 0.0015) * 20;
-            pointLight2.position.z = Math.sin(Date.now() * 0.0015) * 20;
-
-            renderer.render(scene, camera);
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                particlesContainer.appendChild(particle);
+            }
         }
 
-        animate();
+        // Card Hover Effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
-        // Resize handler
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
         });
+
+        // Initialize particles on load
+        createParticles();
     </script>
 </body>
 </html>
